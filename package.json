@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "json-graphql-server graphql.js --p 3333",
     "start": "json-graphql-server graphql.js --port $PORT",
-    "build": "echo 'No build necessary for json-graphql-server'"
+    "build": "json-graphql-server graphql.js --port $PORT --output build"
   },
   "dependencies": {
     "cors": "^2.8.5",
