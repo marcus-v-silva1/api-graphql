@@ -1,3 +1,5 @@
+const express = require('express');
+const cors = require('cors');
 const faker = require('faker');
 
 const TOTAL_PAGES = 5;
@@ -15,7 +17,7 @@ const baseProducts = [
   { name: 'Camiseta DREAMER', description: faker.lorem.paragraph(), image_url: 'https://storage.googleapis.com/xesque-dev/challenge-images/camiseta-01.jpg', category: 't-shirts' },
   { name: 'Caneca Decaf! P&Co', description: faker.lorem.paragraph(), image_url: 'https://storage.googleapis.com/xesque-dev/challenge-images/caneca-02.jpg', category: 'mugs' },
   { name: 'Camiseta Ramones', description: faker.lorem.paragraph(), image_url: 'https://storage.googleapis.com/xesque-dev/challenge-images/camiseta-04.jpg', category: 't-shirts' },
-]
+];
 
 const allProducts = new Array(TOTAL_PAGES).fill(1).reduce((acc) => {
   const products = baseProducts.map(product => ({
@@ -27,11 +29,27 @@ const allProducts = new Array(TOTAL_PAGES).fill(1).reduce((acc) => {
     }),
     sales: faker.datatype.number(40),
     created_at: faker.date.past()
-  })).sort(() => .5 - Math.random());
+  })).sort(() => 0.5 - Math.random());
 
-  return [...acc, ...products]
-}, [])
+  return [...acc, ...products];
+}, []);
 
-module.exports = {
-  products: allProducts
-}
+const app = express();
+
+// Habilitar CORS
+app.use(cors());
+
+// Configurar para aceitar JSON no corpo das requisições
+app.use(express.json());
+
+// Rota POST para retornar os produtos
+app.post('/api/products', (req, res) => {
+  // Aqui você pode manipular os dados recebidos no corpo da requisição (req.body)
+  // No exemplo, apenas retornamos os produtos gerados.
+  res.json({ products: allProducts });
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`API rodando na porta ${port}`);
+});
