@@ -5,12 +5,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "json-graphql-server graphql.js --p 3333",
-    "start": "json-graphql-server graphql.js --port $PORT",
-    "build": "json-graphql-server graphql.js --port $PORT --output build"
+    "start": "json-graphql-server graphql.js --port 3333 --output build",
+    "build": "json-graphql-server graphql.js --port 3333 --output build"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "faker": "^5.5.3",
-    "json-graphql-server": "^2.2.3"
+    "json-graphql-server": "^2.2.3",
+    "vercel": "^41.0.2"
   }
 }
